@@ -12,6 +12,7 @@
         </style>
         
         <title>Infinite reaction runner</title>
+        <link rel="icon" href="/hachi-nerd.png">
     </head>
     <body>
         <!-- HTML -->
@@ -21,13 +22,71 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
         <script>
             // JS
+            var img;
+            var userX;
+            var userY;
+            var groundY;
+            var velocity = 0;
+            var gravity = 0.5;
+            var onGround = true;
             
+                        
+            function preload() {
+                // img = loadImage("");
+            }
+
             function setup() {
                 createCanvas(800, 600);
+                noCursor();
+                groundY = height - (height/6);
+                userX = width/9;
+                userY = groundY - 25;
+                console.log(userY);
             }
 
             function draw() {
-                
+                useGravity();
+                scene();
+                user();
+                // userMovement();
+
+                userX = constrain(userX,0,width);
+                // userY = constrain(userY,groundY - 75,groundY - 25);
+            }
+
+            function obstacle(){
+
+            }
+
+            function useGravity(){
+                // after the user jumps, gravity is there to pull the user back to the ground
+                userY += velocity
+                velocity += gravity;
+                if(userY >= groundY - 25){
+                    velocity = 0;
+                }
+            }
+
+            function scene(){
+                background(200);
+                // rectMode(CENTER);
+                noStroke();
+                fill(150);
+                rect(0,groundY,width, height/6);
+            }
+
+            function user() {
+                fill(0);
+                ellipse(userX, userY, 50)
+            }
+
+            function keyPressed() {
+                if (key === 'w' || keyCode === UP_ARROW){
+                    velocity =  -10;
+                }
+                // else if (keyCode === UP_ARROW){
+                //     velocity = -10;
+                // }
             }
             
         </script>
