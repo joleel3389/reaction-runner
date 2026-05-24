@@ -26,10 +26,13 @@
             var userX;
             var userY;
             var groundY;
+            var obstacleSpeed = 5;
             var velocity = 0;
             var gravity = 0.5;
             var onGround = true;
-            
+            var blockX;
+            var powerUp = ['catalyst', 'temperature', 'pressure', 'concentration', 'surface area', 'volume'];
+            var behavior = ['increasing', 'decreasing']
                         
             function preload() {
                 // img = loadImage("");
@@ -41,21 +44,79 @@
                 groundY = height - (height/6);
                 userX = width/9;
                 userY = groundY - 25;
+                blockX = width
                 console.log(userY);
             }
 
             function draw() {
                 useGravity();
+                checkCollision();
                 scene();
+                luckyBlock();
                 user();
+
                 // userMovement();
 
                 userX = constrain(userX,0,width);
                 // userY = constrain(userY,groundY - 75,groundY - 25);
+                obstacleSpeed = constrain(obstacleSpeed,2,12)
             }
 
-            function obstacle(){
+            function luckyBlock(){
+                fill(255, 241, 157);
+                stroke(194, 162, 113);
+                strokeWeight(2);
+                // rectMode(CENTER);
+                rect(blockX,groundY - 50,50);
+                textAlign(CENTER);
+                textSize(25);
+                textStyle(BOLD);
+                fill(255);
+                text("?", blockX + 25, groundY - 15);
 
+                blockX -= obstacleSpeed;
+                if(blockX < -50){
+                    blockX = width 
+                }
+            }
+
+            function usePowerUp(){
+                var i = Math.floor(random(0, powerUp.length));
+                var j = Math.floor(random(0,behavior.length));
+
+                // if a catalyst...
+                if(i === 0){
+                    obstacleSpeed += 2;
+                }
+                // if INCREASING
+                else if(j === 0){
+                    // when factors EXCEPT volume and catalyst increase...
+                    if(i > 0 && i < powerUp.length - 1){
+                        obstacleSpeed += 2;
+                    }
+                    // when volume increases...
+                    if(i === powerUp.length - 1){
+                        obstacleSpeed -= 2;
+                    }
+                // if DECREASING...
+                } else {
+                    // when factors EXCEPT volume and catalyst increase...
+                    if(i > 0 && i < powerUp.length - 1){
+                        obstacleSpeed -= 2;
+                    }
+                    // when volume increases...
+                    if(i === powerUp.length - 1){
+                        obstacleSpeed += 2;
+                    }
+                }
+            }
+
+            function checkCollision(){
+                if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
+                    console.log('collison!');
+                    blockX = width + 25;
+                    usePowerUp();
+                }
             }
 
             function useGravity(){
@@ -64,12 +125,13 @@
                 velocity += gravity;
                 if(userY >= groundY - 25){
                     velocity = 0;
+                    userY = groundY - 25;
                 }
             }
 
             function scene(){
                 background(200);
-                // rectMode(CENTER);
+                // rectMode(LEFT);
                 noStroke();
                 fill(150);
                 rect(0,groundY,width, height/6);
@@ -77,6 +139,7 @@
 
             function user() {
                 fill(0);
+                noStroke();
                 ellipse(userX, userY, 50)
             }
 
