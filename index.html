@@ -80,7 +80,7 @@
                 // score += 1;
 
                 userX = constrain(userX,0,width);
-                userY = constrain(userY,0, height);
+                userY = constrain(userY,0,height-25);
                 // userY = constrain(userY,groundY - 75,groundY - 25);
                 obstacleSpeed = constrain(obstacleSpeed,2,8)
             }
@@ -203,7 +203,7 @@
             }
 
             function keyPressed() {
-                if (key === 'w' || keyCode === UP_ARROW){
+                if (keyCode === 32 || keyCode === UP_ARROW){
                     velocity =  -10;
                 }
                 // else if (keyCode === UP_ARROW){
