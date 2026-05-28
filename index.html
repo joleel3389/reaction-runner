@@ -6,18 +6,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=BioRhyme:wght@200..800&family=Dongle&family=Gafata&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend:wght@100..900&family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Petrona:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Varela+Round&display=swap" rel="stylesheet">
+
         <style>
             /* CSS */
-            
+
         </style>
-        
+
         <title>Infinite reaction runner</title>
         <link rel="icon" href="/hachi-nerd.png">
     </head>
     <body>
         <!-- HTML -->
-        
-        
+
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
         <script>
@@ -32,8 +37,14 @@
             var onGround = true;
             var blockX;
             var powerUp = ['catalyst', 'temperature', 'pressure', 'concentration', 'surface area', 'volume'];
-            var behavior = ['increasing', 'decreasing']
-                        
+            var behavior = ['Increased', 'Decreased']
+
+            var showEffect = false;
+            var effect = "";
+            var explanation = "";
+
+            var score = 0;
+
             function preload() {
                 // img = loadImage("");
             }
@@ -54,12 +65,34 @@
                 scene();
                 luckyBlock();
                 user();
+                scoreTally();
 
                 // userMovement();
 
+                if(showEffect == true){
+                    fill(255);
+                    noStroke();
+                    textSize(30);
+                    textAlign(CENTER);
+                    textFont('Varela Round');
+                    text(effect, 0, height/3,width, 100);
+                }
+                // score += 1;
+
                 userX = constrain(userX,0,width);
+                userY = constrain(userY,0, height);
                 // userY = constrain(userY,groundY - 75,groundY - 25);
-                obstacleSpeed = constrain(obstacleSpeed,2,12)
+                obstacleSpeed = constrain(obstacleSpeed,2,8)
+            }
+
+            function scoreTally(){
+                score += 1;
+                textAlign(LEFT);
+                textFont('Varela Round');
+                fill(255);
+                noStroke();
+                textSize(20);
+                text("Score: " + Math.floor(score/60), 10, 10, width, 100);
             }
 
             function luckyBlock(){
@@ -75,8 +108,8 @@
                 text("?", blockX + 25, groundY - 15);
 
                 blockX -= obstacleSpeed;
-                if(blockX < -50){
-                    blockX = width 
+                if(blockX < -200){
+                    blockX = width
                 }
             }
 
@@ -87,26 +120,52 @@
                 // if a catalyst...
                 if(i === 0){
                     obstacleSpeed += 2;
+                    // text("Added a catalyst, speeding up both the forward and backwards reaction", width/2, height/2);
+                    showEffect = true;
+                    effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
+                    setTimeout(function(){
+                        showEffect = false;
+                    }, 2000); // after 2 seconds
                 }
                 // if INCREASING
                 else if(j === 0){
                     // when factors EXCEPT volume and catalyst increase...
                     if(i > 0 && i < powerUp.length - 1){
                         obstacleSpeed += 2;
+                        showEffect = true;
+                        effect = behavior[j] + " " + powerUp[i] + ", speeding up the reaction!";
+                        setTimeout(function(){
+                            showEffect = false;
+                        }, 2000); // after 2 seconds
                     }
                     // when volume increases...
                     if(i === powerUp.length - 1){
                         obstacleSpeed -= 2;
+                        showEffect = true;
+                        effect = behavior[j] + " " + powerUp[i] + ", slowing down the reaction!";
+                        setTimeout(function(){
+                            showEffect = false;
+                        }, 2000); // after 2 seconds
                     }
                 // if DECREASING...
                 } else {
                     // when factors EXCEPT volume and catalyst increase...
                     if(i > 0 && i < powerUp.length - 1){
                         obstacleSpeed -= 2;
+                        showEffect = true;
+                        effect = behavior[j] + " " + powerUp[i] + ", slowing down the reaction!";
+                        setTimeout(function(){
+                            showEffect = false;
+                        }, 2000); // after 2 seconds
                     }
                     // when volume increases...
                     if(i === powerUp.length - 1){
                         obstacleSpeed += 2;
+                        showEffect = true;
+                        effect = behavior[j] + " " + powerUp[i] + ", speeding up the reaction!";
+                        setTimeout(function(){
+                            showEffect = false;
+                        }, 2000); // after 2 seconds
                     }
                 }
             }
@@ -114,7 +173,7 @@
             function checkCollision(){
                 if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
                     console.log('collison!');
-                    blockX = width + 25;
+                    blockX = width + 200;
                     usePowerUp();
                 }
             }
@@ -151,7 +210,7 @@
                 //     velocity = -10;
                 // }
             }
-            
+
         </script>
     </body>
 </html>
