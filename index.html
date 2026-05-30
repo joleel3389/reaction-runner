@@ -46,6 +46,7 @@
             var timeout;
 
             var score = 0;
+            var state = "start";
 
             function preload() {
                 bg = loadImage("imgs/background.png");
@@ -62,22 +63,30 @@
             }
 
             function draw() {
-                useGravity();
-                scene();
-                checkCollision();
-                luckyBlock();
-                user();
-                scoreTally();
+                if(state === "start"){
+                    startScreen();
 
-                // userMovement();
+                    rectMode(CORNER);
+                }
+                else if(state === "play"){
+                    useGravity();
+                    scene();
+                    checkCollision();
+                    luckyBlock();
+                    user();
+                    scoreTally();
 
-                if(showEffect == true){
-                    fill(255);
-                    noStroke();
-                    textSize(30);
-                    textAlign(CENTER);
-                    textFont('Varela Round');
-                    text(effect + " \n " + explanation, 0, height/4,width, 200);
+                    // userMovement();
+
+                    if(showEffect == true){
+                        fill(255);
+                        textSize(30);
+                        textAlign(CENTER);
+                        textFont('Varela Round');
+                        stroke(120);
+                        strokeWeight(4);
+                        text(effect + " \n " + explanation, 0, height/4 + 50,width, 200);
+                    }
                 }
                 // score += 1;
 
@@ -92,7 +101,8 @@
                 textAlign(LEFT);
                 textFont('Varela Round');
                 fill(255);
-                noStroke();
+                stroke(120);
+                strokeWeight(4);
                 textSize(20);
                 text("Score: " + Math.floor(score/60), 10, 10, width, 100);
             }
@@ -125,7 +135,7 @@
                     // text("Added a catalyst, speeding up both the forward and backwards reaction", width/2, height/2);
                     showEffect = true;
                     effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
-                    explanation = "A " + powerUp[i] + " provides an alternative pathway, lowering the activation energy for the reaction, " + behavior[j] + "ing the rate of reaction.";
+                    explanation = "A " + powerUp[i] + " provides an alternative pathway, lowering the activation energy for the reaction, " + behavior[0] + "ing the rate of reaction.";
                     clearTimeout(timeout);
                     timeout = setTimeout(function(){
                         showEffect = false;
@@ -159,8 +169,8 @@
                     if(i === powerUp.length - 1){
                         obstacleSpeed -= 2;
                         showEffect = true;
-                        effect = "Increased " + " " + powerUp[i] + ", slowing down the reaction!";
-                        explanation = "An " + behavior[j] + "e in " + powerUp[i] + " reduces the frequency of collisions between particles, " + behavior[j] + "ing the rate of reaction.";
+                        effect = "Increased " + powerUp[i] + ", slowing down the reaction!";
+                        explanation = "An " + behavior[j] + "e in " + powerUp[i] + " reduces the frequency of collisions between particles, " + behavior[1] + "ing the rate of reaction.";
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
                             showEffect = false;
@@ -195,7 +205,7 @@
                         obstacleSpeed += 2;
                         showEffect = true;
                         effect = "Decreased " + " " + powerUp[i] + ", speeding up the reaction!";
-                        explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[j] + "ing the rate of reaction.";
+                        explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[0] + "ing the rate of reaction.";
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
                             showEffect = false;
@@ -224,12 +234,43 @@
                 }
             }
 
+
+            function startScreen(){
+                // make bg fit to screen
+                image(bg,0,0,800,600);
+                noStroke();
+                fill(0,0,0,150);
+                rectMode(CENTER);
+                rect(width/2, height/2, 600, 400, 10);
+
+                // start panel & directions
+                fill(255);
+                stroke(120);
+                strokeWeight(4);
+                textSize(40);
+                textAlign(CENTER);
+                textFont('Varela Round');
+                textStyle(BOLD);
+                text("Reaction runner game", width/2, height/3 + 25);
+                textStyle(NORMAL);
+                textSize(30);
+                text("SPACEBAR / UP ARROW to jump", width/2, height/3 + 95);
+                // text("Click anywhere with your mouse to \n begin playing!", width/2, height/3 + 150);
+                fill(188, 219, 171);
+                stroke(224, 239, 205);
+                rect(width/2, height/3 + 170, width/4, 70, 10);
+                fill(255);
+                textStyle(BOLD);
+                noStroke();
+                text("START!", width/2, height/3 + 180);
+            }
             function scene(){
                 image(bg,0,0,800,500);
                 // background(200);
                 // rectMode(LEFT);
                 noStroke();
                 fill(150);
+                // rectMode(LEFT);
                 rect(0,groundY,width, height/6);
             }
 
@@ -246,6 +287,15 @@
                 // else if (keyCode === UP_ARROW){
                 //     velocity = -10;
                 // }
+            }
+
+            function mouseClicked() {
+                if(state === "start"){
+                    if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+                        state = "play";
+                    }
+                }
+                // state = "play";
             }
 
         </script>
