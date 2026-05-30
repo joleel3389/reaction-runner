@@ -39,6 +39,7 @@
             var blockX;
             var powerUp = ['catalyst', 'temperature', 'pressure', 'concentration', 'surface area', 'volume'];
             var behavior = ['increas', 'decreas']
+            var currentBlock = "lucky";
 
             var showEffect = false;
             var effect = "";
@@ -72,7 +73,7 @@
                     useGravity();
                     scene();
                     checkCollision();
-                    luckyBlock();
+                    randomBlock();
                     user();
                     scoreTally();
 
@@ -107,17 +108,22 @@
                 text("Score: " + Math.floor(score/60), 10, 10, width, 100);
             }
 
-            function luckyBlock(){
-                fill(255, 241, 157);
-                stroke(194, 162, 113);
-                strokeWeight(2);
-                // rectMode(CENTER);
-                rect(blockX,groundY - 50,50);
-                textAlign(CENTER);
-                textSize(25);
-                textStyle(BOLD);
-                fill(255);
-                text("?", blockX + 25, groundY - 15);
+            function randomBlock(){
+                if(currentBlock === "lucky"){
+                    fill(255, 241, 157);
+                    stroke(194, 162, 113);
+                    strokeWeight(2);
+                    // rectMode(CENTER);
+                    rect(blockX, groundY - 50, 50, 50, 5);
+                    textAlign(CENTER);
+                    textSize(25);
+                    textStyle(BOLD);
+                    fill(255);
+                    text("?", blockX + 25, groundY - 15);
+                }
+                else if (currentblock === "enemy"){
+                    
+                }
 
                 blockX -= obstacleSpeed;
                 if(blockX < -200){
