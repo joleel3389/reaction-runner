@@ -51,6 +51,7 @@
 
             function preload() {
                 bg = loadImage("imgs/background.png");
+                enemy = loadImage("imgs/anokoRun.png");
             }
 
             function setup() {
@@ -94,7 +95,7 @@
                 userX = constrain(userX,0,width);
                 userY = constrain(userY,0,height-25);
                 // userY = constrain(userY,groundY - 75,groundY - 25);
-                obstacleSpeed = constrain(obstacleSpeed,2,8)
+                obstacleSpeed = constrain(obstacleSpeed,2,12)
             }
 
             function scoreTally(){
@@ -122,11 +123,11 @@
                     text("?", blockX + 25, groundY - 15);
                 }
                 else if (currentblock === "enemy"){
-                    
+                    image(enemy,0,0,50,50);
                 }
 
                 blockX -= obstacleSpeed;
-                if(blockX < -200){
+                if(blockX < -150){
                     blockX = width
                 }
             }
@@ -169,7 +170,7 @@
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
                             showEffect = false;
-                        }, 3000); // after 3 seconds
+                        }, 3500); // after 3.5 seconds
                     }
                     // when volume increases...
                     if(i === powerUp.length - 1){
@@ -180,7 +181,7 @@
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
                             showEffect = false;
-                        }, 3000); // after 3 seconds
+                        }, 3500); // after 3.5 seconds
                     }
                 // if DECREASING...
                 } else {
@@ -204,7 +205,7 @@
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
                             showEffect = false;
-                        }, 3000); // after 3 seconds
+                        }, 3500); // after 3.5 seconds
                     }
                     // when volume decreases...
                     if(i === powerUp.length - 1){
@@ -215,16 +216,16 @@
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
                             showEffect = false;
-                        }, 3000); // after 3 seconds
+                        }, 3500); // after 3.5 seconds
                     }
                 }
             }
 
             function checkCollision(){
                 if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
-                    if(showEffect === false){ // if there's no text on the screen from a previous collision, it won't use another power up.
+                    if(showEffect === false && currentBlock === "lucky"){ // if there's no text on the screen from a previous collision, it won't use another power up. (also must be a lucky block)
                         console.log('collison!');
-                        blockX = width + 200;
+                        blockX = width + 150;
                         usePowerUp();
                     }
                 }
