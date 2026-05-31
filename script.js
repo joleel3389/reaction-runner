@@ -132,7 +132,7 @@ function usePowerUp(){
         clearTimeout(timeout);
         timeout = setTimeout(function(){
             showEffect = false;
-        }, 3000); // after 3 seconds
+        }, 4000); // after 4 seconds
     }
     // if INCREASING
     else if(j === 0){
@@ -156,7 +156,7 @@ function usePowerUp(){
             clearTimeout(timeout);
             timeout = setTimeout(function(){
                 showEffect = false;
-            }, 3500); // after 3.5 seconds
+            }, 4000); // after 4 seconds
         }
         // when volume increases...
         if(i === powerUp.length - 1){
@@ -167,7 +167,7 @@ function usePowerUp(){
             clearTimeout(timeout);
             timeout = setTimeout(function(){
                 showEffect = false;
-            }, 3500); // after 3.5 seconds
+            }, 4000); // after 4 seconds
         }
     // if DECREASING...
     } else {
@@ -191,7 +191,7 @@ function usePowerUp(){
             clearTimeout(timeout);
             timeout = setTimeout(function(){
                 showEffect = false;
-            }, 3500); // after 3.5 seconds
+            }, 4000); // after 4 seconds
         }
         // when volume decreases...
         if(i === powerUp.length - 1){
@@ -202,7 +202,7 @@ function usePowerUp(){
             clearTimeout(timeout);
             timeout = setTimeout(function(){
                 showEffect = false;
-            }, 3500); // after 3.5 seconds
+            }, 4000); // after 4 seconds
         }
     }
 }
@@ -313,7 +313,7 @@ function user() {
 
 function keyPressed() {
     if (keyCode === 32 || keyCode === UP_ARROW){
-        velocity =  -10;
+        velocity =  -15;
     }
     // else if (keyCode === UP_ARROW){
     //     velocity = -10;
