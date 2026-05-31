@@ -325,6 +325,26 @@ function touchStarted() {
         velocity = -10;
     }
     return false;
+    if(state === "start"){
+        if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+            console.log('play');
+            state = "play";
+        }
+    }
+    // state = "play";
+    if(state === "gameOver"){
+        if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+            console.log('game over');
+            score = 0;
+            obstacleSpeed = 5;
+            blockX = width + 150;
+            currentBlock = "lucky";
+            velocity = 0;
+            showEffect = false;
+
+            state = "play";
+        }
+    }
 }
 
 function mousePressed() {
