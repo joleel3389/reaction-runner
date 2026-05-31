@@ -321,6 +321,10 @@ function keyPressed() {
         velocity =  -15;
         onGround = false;
     }
+    if (keyCode === SHIFT || keyCode === DOWN_ARROW){
+        velocity = 15;
+        onGround = false;
+    }
     // else if (keyCode === UP_ARROW){
     //     velocity = -10;
     // }
