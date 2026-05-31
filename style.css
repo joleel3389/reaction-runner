@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    min-height: 100vh;
+    background: #fce4ec;
+    padding: 40px;
+    box-sizing: border-box;
+}
+canvas {
+    width: 800px !important;
+    height: 600px !important;
+    border: 10px solid #c8a4a4;
+    border-radius: 5px;
+    display: block;
+}
