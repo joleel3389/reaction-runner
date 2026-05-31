@@ -32,7 +32,7 @@
             var userY;
             var groundY;
             var bg;
-            var obstacleSpeed = 5;
+            var obstacleSpeed = 7;
             var velocity = 0;
             var gravity = 0.5;
             var onGround = true;
@@ -81,21 +81,30 @@
                     // userMovement();
 
                     if(showEffect == true){
+                        // noStroke();
+                        // fill(0,0,0,150);
+                        // rectMode(CENTER);
+                        // rect(width/2, height/4 + 100, width-20, 220, 10);
+                        // rectMode(CORNER);
+
                         fill(255);
                         textSize(30);
                         textAlign(CENTER);
                         textFont('Varela Round');
-                        stroke(120);
-                        strokeWeight(4);
-                        text(effect + " \n " + explanation, 0, height/4 + 50,width, 200);
+                        stroke(110);
+                        strokeWeight(8);
+                        text(effect + " \n " + explanation, 0, height/4 + 50,width, 220);
                     }
+                }
+                else if(state === "gameOver"){
+                    gameOver();
                 }
                 // score += 1;
 
                 userX = constrain(userX,0,width);
                 userY = constrain(userY,0,height-25);
                 // userY = constrain(userY,groundY - 75,groundY - 25);
-                obstacleSpeed = constrain(obstacleSpeed,2,12)
+                obstacleSpeed = constrain(obstacleSpeed,5,16)
             }
 
             function scoreTally(){
@@ -122,13 +131,19 @@
                     fill(255);
                     text("?", blockX + 25, groundY - 15);
                 }
-                else if (currentblock === "enemy"){
-                    image(enemy,0,0,50,50);
+                else if (currentBlock === "enemy"){
+                    image(enemy, blockX, groundY - 70, 70, 70);
                 }
 
                 blockX -= obstacleSpeed;
                 if(blockX < -150){
                     blockX = width
+                    if(random() > 0.5){
+                        currentBlock = "lucky";
+                    }
+                    else {
+                        currentBlock = "enemy";
+                    }
                 }
             }
 
@@ -211,7 +226,7 @@
                     if(i === powerUp.length - 1){
                         obstacleSpeed += 2;
                         showEffect = true;
-                        effect = "Decreased " + " " + powerUp[i] + ", speeding up the reaction!";
+                        effect = "Decreased " + powerUp[i] + ", speeding up the reaction!";
                         explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[0] + "ing the rate of reaction.";
                         clearTimeout(timeout);
                         timeout = setTimeout(function(){
@@ -222,13 +237,21 @@
             }
 
             function checkCollision(){
-                if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
+                // if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
                     if(showEffect === false && currentBlock === "lucky"){ // if there's no text on the screen from a previous collision, it won't use another power up. (also must be a lucky block)
-                        console.log('collison!');
-                        blockX = width + 150;
-                        usePowerUp();
+                        if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
+                            console.log('lucky collison!');
+                            blockX = width + 150;
+                            usePowerUp();
+                        }
                     }
-                }
+                    else if(currentBlock === "enemy"){
+                        if(userX - 35 < blockX + 70 && userX + 35 > blockX && userY + 35 > groundY - 70){
+                            console.log('enemy collison!');
+                            state = "gameOver";
+                        }
+                    }
+                // }
             }
 
             function useGravity(){
@@ -271,6 +294,36 @@
                 noStroke();
                 text("START!", width/2, height/3 + 180);
             }
+
+            function gameOver(){
+                image(bg,0,0,800,600);
+                noStroke();
+                fill(0,0,0,150);
+                rectMode(CENTER);
+                rect(width/2, height/2, 600, 400, 10);
+
+                fill(255);
+                stroke(120);
+                strokeWeight(4);
+                textSize(50);
+                textAlign(CENTER);
+                textFont('Varela Round');
+                textStyle(BOLD);
+                text("GAME OVER!", width/2, height/3 + 25);
+
+                fill(188, 219, 171);
+                stroke(224, 239, 205);
+                rect(width/2, height/3 + 170, width/4, 70, 10);
+                fill(255);
+                textSize(30);
+                stroke(120);
+                text("Your score: " + Math.floor(score/60), width/2, height/3 + 90 )
+                noStroke();
+                text("Play again", width/2, height/3 + 180);
+
+                rectMode(CORNER);
+            }
+
             function scene(){
                 image(bg,0,0,800,500);
                 // background(200);
@@ -299,10 +352,24 @@
             function mouseClicked() {
                 if(state === "start"){
                     if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+                        console.log('play');
                         state = "play";
                     }
                 }
                 // state = "play";
+                if(state === "gameOver"){
+                    if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+                        console.log('game over');
+                        score = 0;
+                        obstacleSpeed = 5;
+                        blockX = width + 150;
+                        currentBlock = "lucky";
+                        velocity = 0;
+                        showEffect = false;
+
+                        state = "play";
+                    }
+                }
             }
 
         </script>
