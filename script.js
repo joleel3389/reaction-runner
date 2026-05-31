@@ -303,7 +303,7 @@ function scene(){
     // background(200);
     // rectMode(LEFT);
     noStroke();
-    fill(150);
+    fill(239, 235, 221);
     // rectMode(LEFT);
     rect(0,groundY,width, height/6);
 }
