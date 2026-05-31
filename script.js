@@ -320,12 +320,12 @@ function keyPressed() {
     // }
 }
 
-// function touchStarted() {
-//     if(state === "play"){
-//         velocity = -10;
-//     }
-//     return false;
-// }
+function touchStarted() {
+    if(state === "play"){
+        velocity = -10;
+    }
+    return false;
+}
 
 function mousePressed() {
     if(state === "start"){
