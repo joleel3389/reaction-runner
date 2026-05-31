@@ -23,6 +23,10 @@ var state = "start";
 function preload() {
     bg = loadImage("imgs/background.png");
     enemy = loadImage("imgs/anokoRun.png");
+    chiikawaRun1 = loadImage("imgs/speedrun1.png");
+    chiikawaRun2 = loadImage("imgs/speedrun2.png");
+    chiikawaFall = loadImage("imgs/falling.png");
+
 }
 
 function setup() {
@@ -218,7 +222,7 @@ function checkCollision(){
                 usePowerUp();
             }
         }
-        else if(currentBlock === "enemy"){
+        else if(showEffect === false && currentBlock === "enemy"){
             if(userX - 35 < blockX + 70 && userX + 35 > blockX && userY + 35 > groundY - 70){
                 console.log('enemy collison!');
                 state = "gameOver";
@@ -311,9 +315,21 @@ function scene(){
 }
 
 function user() {
-    fill(0);
-    noStroke();
-    ellipse(userX, userY, 50)
+    // fill(0);
+    // noStroke();
+    // ellipse(userX, userY, 50)
+    imageMode(CENTER);
+    if(onGround === false){
+        image(chiikawaFall, userX, userY, 50, 50);
+    }
+    else if(frameCount % 30 < 10){
+        image(chiikawaRun1, userX, userY, 50, 50);
+    }
+    else {
+        console.log('sprite swap!');
+        image(chiikawaRun2, userX, userY, 50, 50);
+    }
+    imageMode(CORNER);
 }
 
 function keyPressed() {
