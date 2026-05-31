@@ -331,8 +331,9 @@ function keyPressed() {
 }
 
 function touchStarted() {
-    if(state === "play"){
+    if(state === "play" && onGround == true){
         velocity = -15;
+        onGround = false;
     }
     if(state === "start"){
         if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
