@@ -1,6 +1,6 @@
 # Reaction runner
 
-An endless runner game that teaches you how factors affect the reaction rate (Unit 5 of AP Chemistry), that is also Chiikawa themed. Use the SPACEBAR / UP ARROW to jump, and avoid bumping into Anoko, the chimera!
+An endless runner game that teaches you how factors affect the reaction rate (Unit 5 of AP Chemistry), that is also Chiikawa themed. Use the SPACEBAR / UP ARROW to jump, and avoid bumping into Anoko, the chimera! Best played on a device connected to a keyboard and mouse.
 
 ## Links
 
