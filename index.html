@@ -349,7 +349,14 @@
                 // }
             }
 
-            function mouseClicked() {
+            function touchStarted() {
+                if(state === "play"){
+                    velocity = -10;
+                }
+                return false;
+            }
+
+            function mousePressed() {
                 if(state === "start"){
                     if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
                         console.log('play');
