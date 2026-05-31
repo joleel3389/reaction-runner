@@ -229,11 +229,13 @@ function checkCollision(){
 
 function useGravity(){
     // after the user jumps, gravity is there to pull the user back to the ground
+
     userY += velocity
     velocity += gravity;
     if(userY >= groundY - 25){
         velocity = 0;
         userY = groundY - 25;
+        onGround = true;
     }
 }
 
@@ -315,8 +317,9 @@ function user() {
 }
 
 function keyPressed() {
-    if (keyCode === 32 || keyCode === UP_ARROW){
+    if ((keyCode === 32 || keyCode === UP_ARROW) && onGround == true){
         velocity =  -15;
+        onGround = false;
     }
     // else if (keyCode === UP_ARROW){
     //     velocity = -10;
@@ -327,7 +330,6 @@ function touchStarted() {
     if(state === "play"){
         velocity = -10;
     }
-    return false;
     if(state === "start"){
         if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
             console.log('play');
@@ -348,6 +350,7 @@ function touchStarted() {
             state = "play";
         }
     }
+    return false;
 }
 
 function mousePressed() {
