@@ -108,7 +108,7 @@ function randomBlock(){
     }
 
     blockX -= obstacleSpeed;
-    if(blockX < -150){
+    if(blockX < -250){
         blockX = width
         if(random() > 0.5){
             currentBlock = "lucky";
@@ -214,7 +214,7 @@ function checkCollision(){
             if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
                 console.log('lucky collison!');
                 score += 10;
-                blockX = width + 150;
+                blockX = width + 250;
                 usePowerUp();
             }
         }
@@ -328,7 +328,7 @@ function keyPressed() {
 
 function touchStarted() {
     if(state === "play"){
-        velocity = -10;
+        velocity = -15;
     }
     if(state === "start"){
         if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
