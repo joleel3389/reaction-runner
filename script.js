@@ -79,14 +79,15 @@ function draw() {
 }
 
 function scoreTally(){
-    score += 1;
+    // score += 1;
     textAlign(LEFT);
     textFont('Varela Round');
     fill(255);
     stroke(120);
     strokeWeight(4);
     textSize(20);
-    text("Score: " + Math.floor(score/60), 10, 10, width, 100);
+    // text("Score: " + Math.floor(score/60), 10, 10, width, 100);
+    text("Score: " + score, 10, 10, width, 100);
 }
 
 function randomBlock(){
@@ -212,6 +213,7 @@ function checkCollision(){
         if(showEffect === false && currentBlock === "lucky"){ // if there's no text on the screen from a previous collision, it won't use another power up. (also must be a lucky block)
             if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
                 console.log('lucky collison!');
+                score += 10;
                 blockX = width + 150;
                 usePowerUp();
             }
@@ -288,7 +290,8 @@ function gameOver(){
     fill(255);
     textSize(30);
     stroke(120);
-    text("Your score: " + Math.floor(score/60), width/2, height/3 + 90 )
+    // text("Your score: " + Math.floor(score/60), width/2, height/3 + 90)
+    text("Your score: " + score, width/2, height/3 + 90)
     noStroke();
     text("Play again", width/2, height/3 + 180);
 
