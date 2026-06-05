@@ -127,89 +127,193 @@ function usePowerUp(){
     var i = Math.floor(random(0, powerUp.length));
     var j = Math.floor(random(0,behavior.length));
 
-    // if a catalyst...
-    if(i === 0){
-        obstacleSpeed += 2;
-        // text("Added a catalyst, speeding up both the forward and backwards reaction", width/2, height/2);
-        showEffect = true;
-        effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
-        explanation = "A " + powerUp[i] + " provides an alternative pathway, lowering the activation energy for the reaction, " + behavior[0] + "ing the rate of reaction.";
-        clearTimeout(timeout);
-        timeout = setTimeout(function(){
-            showEffect = false;
-        }, 4000); // after 4 seconds
-    }
-    // if INCREASING
-    else if(j === 0){
-        // when factors EXCEPT volume and catalyst increase...
-        if(i > 0 && i < powerUp.length - 1){
+    var answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
+
+    if(i === 0){ // catalyst
+        answer = prompt("What happens to the reaction rate when a " + powerUp[i] + " is added?")
+        if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
             obstacleSpeed += 2;
             showEffect = true;
-            effect = "Increased " + powerUp[i] + ", speeding up the reaction!";
-            if(i === 1){ //temperature increase
-                explanation = "An " + behavior[j] + "e in " + powerUp[i] + " allows molecules to move faster, " + behavior[j] + "ing the frequency of collisions and rate of reaction.";
-            }
-            else if(i === 2){ // pressure increase
-                explanation = "An " + behavior[j] + "e in " + powerUp[i] + " for gases forces molecules together, " + behavior[j] + "ing the likelihood of collisions and rate of reaction.";
-            }
-            else if(i === 3){ // concentration increase
-                explanation = "An " + behavior[j] + "e in " + powerUp[i] + " leaves more particles available to collide, " + behavior[j] + "ing the rate of reaction.";
-            }
-            else { // surface area increase
-                explanation = "An " + behavior[j] + "e in " + powerUp[i] + " exposes more particles to collision, " + behavior[j] + "ing the rate of reaction.";
-            }
+            effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
+            explanation = "A " + powerUp[i] + " provides an alternative pathway, lowering the activation energy for the reaction, " + behavior[0] + "ing the rate of reaction.";
             clearTimeout(timeout);
             timeout = setTimeout(function(){
                 showEffect = false;
             }, 4000); // after 4 seconds
+        } else {
+            state = "gameOver";
+        }
+    } else if (j === 0){ // increasing
+        if(i > 0 && i < powerUp.length - 1){
+            if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
+                obstacleSpeed += 2;
+                showEffect = true;
+                effect = "Increased " + powerUp[i] + ", speeding up the reaction!";
+                if(i === 1){ //temperature increase
+                    explanation = "An " + behavior[j] + "e in " + powerUp[i] + " allows molecules to move faster, " + behavior[j] + "ing the frequency of collisions and rate of reaction.";
+                }
+                else if(i === 2){ // pressure increase
+                    explanation = "An " + behavior[j] + "e in " + powerUp[i] + " for gases forces molecules together, " + behavior[j] + "ing the likelihood of collisions and rate of reaction.";
+                }
+                else if(i === 3){ // concentration increase
+                    explanation = "An " + behavior[j] + "e in " + powerUp[i] + " leaves more particles available to collide, " + behavior[j] + "ing the rate of reaction.";
+                }
+                else { // surface area increase
+                    explanation = "An " + behavior[j] + "e in " + powerUp[i] + " exposes more particles to collision, " + behavior[j] + "ing the rate of reaction.";
+                }
+                clearTimeout(timeout);
+                timeout = setTimeout(function(){
+                    showEffect = false;
+                }, 4000); // after 4 seconds
+            } else {
+                state = "gameOver";
+            }
         }
         // when volume increases...
         if(i === powerUp.length - 1){
-            obstacleSpeed -= 2;
-            showEffect = true;
-            effect = "Increased " + powerUp[i] + ", slowing down the reaction!";
-            explanation = "An " + behavior[j] + "e in " + powerUp[i] + " reduces the frequency of collisions between particles, " + behavior[1] + "ing the rate of reaction.";
-            clearTimeout(timeout);
-            timeout = setTimeout(function(){
-                showEffect = false;
-            }, 4000); // after 4 seconds
+            if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
+                obstacleSpeed -= 2;
+                showEffect = true;
+                effect = "Increased " + powerUp[i] + ", slowing down the reaction!";
+                explanation = "An " + behavior[j] + "e in " + powerUp[i] + " reduces the frequency of collisions between particles, " + behavior[1] + "ing the rate of reaction.";
+                clearTimeout(timeout);
+                timeout = setTimeout(function(){
+                    showEffect = false;
+                }, 4000); // after 4 seconds
+            } else {
+                state = "gameOver"
+            }
         }
-    // if DECREASING...
-    } else {
-        // when factors EXCEPT volume and catalyst decrease...
+
+    } else if (j === 1){ // decreasing
         if(i > 0 && i < powerUp.length - 1){
-            obstacleSpeed -= 2;
-            showEffect = true;
-            effect = "Decreased " + powerUp[i] + ", slowing down the reaction!";
-            if(i === 1){ //temperature decrease
-                explanation = "A " + behavior[j] + "e in " + powerUp[i] + " reduces kinetic energy of molecules, " + behavior[j] + "ing effective collisions and the rate of reaction.";
+            if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
+                obstacleSpeed -= 2;
+                showEffect = true;
+                effect = "Decreased " + powerUp[i] + ", slowing down the reaction!";
+                if(i === 1){ //temperature decrease
+                    explanation = "A " + behavior[j] + "e in " + powerUp[i] + " reduces kinetic energy of molecules, " + behavior[j] + "ing effective collisions and the rate of reaction.";
+                }
+                else if(i === 2){ // pressure decrease
+                    explanation = "A " + behavior[j] + "e in " + powerUp[i] + " spreads out gas molecules, " + behavior[j] + "ing the likelihood of collisions and rate of reaction.";
+                }
+                else if(i === 3){ // concentration decrease
+                    explanation = "A " + behavior[j] + "e in " + powerUp[i] + " leaves less particles available to collide, " + behavior[j] + "ing the rate of reaction.";
+                }
+                else { // surface area decrease
+                    explanation = "A " + behavior[j] + "e in " + powerUp[i] + " exposes less particles to collision, " + behavior[j] + "ing the rate of reaction.";
+                }
+                clearTimeout(timeout);
+                timeout = setTimeout(function(){
+                    showEffect = false;
+                }, 4000); // after 4 seconds
+            } else {
+                state = "gameOver";
             }
-            else if(i === 2){ // pressure decrease
-                explanation = "A " + behavior[j] + "e in " + powerUp[i] + " spreads out gas molecules, " + behavior[j] + "ing the likelihood of collisions and rate of reaction.";
-            }
-            else if(i === 3){ // concentration decrease
-                explanation = "A " + behavior[j] + "e in " + powerUp[i] + " leaves less particles available to collide, " + behavior[j] + "ing the rate of reaction.";
-            }
-            else { // surface area decrease
-                explanation = "A " + behavior[j] + "e in " + powerUp[i] + " exposes less particles to collision, " + behavior[j] + "ing the rate of reaction.";
-            }
-            clearTimeout(timeout);
-            timeout = setTimeout(function(){
-                showEffect = false;
-            }, 4000); // after 4 seconds
         }
         // when volume decreases...
         if(i === powerUp.length - 1){
-            obstacleSpeed += 2;
-            showEffect = true;
-            effect = "Decreased " + powerUp[i] + ", speeding up the reaction!";
-            explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[0] + "ing the rate of reaction.";
-            clearTimeout(timeout);
-            timeout = setTimeout(function(){
-                showEffect = false;
-            }, 4000); // after 4 seconds
+           if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
+                obstacleSpeed += 2;
+                showEffect = true;
+                effect = "Decreased " + powerUp[i] + ", speeding up the reaction!";
+                explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[0] + "ing the rate of reaction.";
+                clearTimeout(timeout);
+                timeout = setTimeout(function(){
+                    showEffect = false;
+                }, 4000); // after 4 seconds
+           }
+           else {
+                state = "gameOver";
+           }
         }
+    } else if(answer === null){
+        state = "gameOver";
     }
+
+    // // if a catalyst...
+    // if(i === 0){
+    //     obstacleSpeed += 2;
+    //     // text("Added a catalyst, speeding up both the forward and backwards reaction", width/2, height/2);
+    //     showEffect = true;
+    //     effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
+    //     explanation = "A " + powerUp[i] + " provides an alternative pathway, lowering the activation energy for the reaction, " + behavior[0] + "ing the rate of reaction.";
+    //     clearTimeout(timeout);
+    //     timeout = setTimeout(function(){
+    //         showEffect = false;
+    //     }, 4000); // after 4 seconds
+    // }
+    // // if INCREASING
+    // else if(j === 0){
+    //     // when factors EXCEPT volume and catalyst increase...
+    //     if(i > 0 && i < powerUp.length - 1){
+    //         obstacleSpeed += 2;
+    //         showEffect = true;
+    //         effect = "Increased " + powerUp[i] + ", speeding up the reaction!";
+    //         if(i === 1){ //temperature increase
+    //             explanation = "An " + behavior[j] + "e in " + powerUp[i] + " allows molecules to move faster, " + behavior[j] + "ing the frequency of collisions and rate of reaction.";
+    //         }
+    //         else if(i === 2){ // pressure increase
+    //             explanation = "An " + behavior[j] + "e in " + powerUp[i] + " for gases forces molecules together, " + behavior[j] + "ing the likelihood of collisions and rate of reaction.";
+    //         }
+    //         else if(i === 3){ // concentration increase
+    //             explanation = "An " + behavior[j] + "e in " + powerUp[i] + " leaves more particles available to collide, " + behavior[j] + "ing the rate of reaction.";
+    //         }
+    //         else { // surface area increase
+    //             explanation = "An " + behavior[j] + "e in " + powerUp[i] + " exposes more particles to collision, " + behavior[j] + "ing the rate of reaction.";
+    //         }
+    //         clearTimeout(timeout);
+    //         timeout = setTimeout(function(){
+    //             showEffect = false;
+    //         }, 4000); // after 4 seconds
+    //     }
+    //     // when volume increases...
+    //     if(i === powerUp.length - 1){
+    //         obstacleSpeed -= 2;
+    //         showEffect = true;
+    //         effect = "Increased " + powerUp[i] + ", slowing down the reaction!";
+    //         explanation = "An " + behavior[j] + "e in " + powerUp[i] + " reduces the frequency of collisions between particles, " + behavior[1] + "ing the rate of reaction.";
+    //         clearTimeout(timeout);
+    //         timeout = setTimeout(function(){
+    //             showEffect = false;
+    //         }, 4000); // after 4 seconds
+    //     }
+    // // if DECREASING...
+    // } else {
+    //     // when factors EXCEPT volume and catalyst decrease...
+    //     if(i > 0 && i < powerUp.length - 1){
+    //         obstacleSpeed -= 2;
+    //         showEffect = true;
+    //         effect = "Decreased " + powerUp[i] + ", slowing down the reaction!";
+    //         if(i === 1){ //temperature decrease
+    //             explanation = "A " + behavior[j] + "e in " + powerUp[i] + " reduces kinetic energy of molecules, " + behavior[j] + "ing effective collisions and the rate of reaction.";
+    //         }
+    //         else if(i === 2){ // pressure decrease
+    //             explanation = "A " + behavior[j] + "e in " + powerUp[i] + " spreads out gas molecules, " + behavior[j] + "ing the likelihood of collisions and rate of reaction.";
+    //         }
+    //         else if(i === 3){ // concentration decrease
+    //             explanation = "A " + behavior[j] + "e in " + powerUp[i] + " leaves less particles available to collide, " + behavior[j] + "ing the rate of reaction.";
+    //         }
+    //         else { // surface area decrease
+    //             explanation = "A " + behavior[j] + "e in " + powerUp[i] + " exposes less particles to collision, " + behavior[j] + "ing the rate of reaction.";
+    //         }
+    //         clearTimeout(timeout);
+    //         timeout = setTimeout(function(){
+    //             showEffect = false;
+    //         }, 4000); // after 4 seconds
+    //     }
+    //     // when volume decreases...
+    //     if(i === powerUp.length - 1){
+    //         obstacleSpeed += 2;
+    //         showEffect = true;
+    //         effect = "Decreased " + powerUp[i] + ", speeding up the reaction!";
+    //         explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[0] + "ing the rate of reaction.";
+    //         clearTimeout(timeout);
+    //         timeout = setTimeout(function(){
+    //             showEffect = false;
+    //         }, 4000); // after 4 seconds
+    //     }
+    // }
 }
 
 function checkCollision(){
