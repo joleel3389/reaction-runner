@@ -131,7 +131,7 @@ function usePowerUp(){
     var answer
 
     if(i === 0){ // catalyst
-        answer = prompt("What happens to the reaction rate when a " + powerUp[i] + " is added?")
+        answer = prompt("What happens to the reaction rate when a " + powerUp[i] + " is added? Please spell correctly.")
         if(answer === null){
                 state = "gameOver";
             }
@@ -148,7 +148,7 @@ function usePowerUp(){
             state = "gameOver";
         }
     } else if (j === 0){ // increasing
-        answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
+        answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing? Please spell correctly.")
         if(i > 0 && i < powerUp.length - 1){
             if(answer === null){
                 state = "gameOver";
@@ -197,7 +197,7 @@ function usePowerUp(){
         }
 
     } else if (j === 1){ // decreasing
-        var answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
+        var answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing? Please spell correctly.")
         if(i > 0 && i < powerUp.length - 1){
             if(answer === null){
                 state = "gameOver";
