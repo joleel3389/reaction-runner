@@ -89,7 +89,7 @@ function scoreTally(){
     fill(255);
     stroke(120);
     strokeWeight(4);
-    textSize(20);
+    textSize(30);
     // text("Score: " + Math.floor(score/60), 10, 10, width, 100);
     text("Score: " + score, 10, 10, width, 100);
 }
