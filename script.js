@@ -127,11 +127,15 @@ function usePowerUp(){
     var i = Math.floor(random(0, powerUp.length));
     var j = Math.floor(random(0,behavior.length));
 
-    var answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
+    // var answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
+    var answer
 
     if(i === 0){ // catalyst
         answer = prompt("What happens to the reaction rate when a " + powerUp[i] + " is added?")
-        if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
+        if(answer === null){
+                state = "gameOver";
+            }
+        else if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
             obstacleSpeed += 2;
             showEffect = true;
             effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
@@ -144,8 +148,12 @@ function usePowerUp(){
             state = "gameOver";
         }
     } else if (j === 0){ // increasing
+        answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
         if(i > 0 && i < powerUp.length - 1){
-            if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
+            if(answer === null){
+                state = "gameOver";
+            }
+            else if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
                 obstacleSpeed += 2;
                 showEffect = true;
                 effect = "Increased " + powerUp[i] + ", speeding up the reaction!";
@@ -171,7 +179,10 @@ function usePowerUp(){
         }
         // when volume increases...
         if(i === powerUp.length - 1){
-            if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
+            if(answer === null){
+                state = "gameOver";
+            }
+            else if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
                 obstacleSpeed -= 2;
                 showEffect = true;
                 effect = "Increased " + powerUp[i] + ", slowing down the reaction!";
@@ -186,8 +197,12 @@ function usePowerUp(){
         }
 
     } else if (j === 1){ // decreasing
+        var answer = prompt("What happens to reaction rate when " + powerUp[i] + " is " + behavior[j] + "ing?")
         if(i > 0 && i < powerUp.length - 1){
-            if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
+            if(answer === null){
+                state = "gameOver";
+            }
+            else if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
                 obstacleSpeed -= 2;
                 showEffect = true;
                 effect = "Decreased " + powerUp[i] + ", slowing down the reaction!";
@@ -213,7 +228,10 @@ function usePowerUp(){
         }
         // when volume decreases...
         if(i === powerUp.length - 1){
-           if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
+           if(answer === null){
+                state = "gameOver";
+           }
+           else if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
                 obstacleSpeed += 2;
                 showEffect = true;
                 effect = "Decreased " + powerUp[i] + ", speeding up the reaction!";
@@ -227,9 +245,11 @@ function usePowerUp(){
                 state = "gameOver";
            }
         }
-    } else if(answer === null){
-        state = "gameOver";
     }
+
+    // if(answer === null){
+    //     state = "gameOver";
+    // }
 
     // // if a catalyst...
     // if(i === 0){
