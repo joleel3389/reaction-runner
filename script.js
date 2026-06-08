@@ -137,6 +137,7 @@ function usePowerUp(){
             }
         else if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
             obstacleSpeed += 2;
+            score += 10;
             showEffect = true;
             effect = "Added a " + powerUp[i] + ", speeding up the reaction!";
             explanation = "A " + powerUp[i] + " provides an alternative pathway, lowering the activation energy for the reaction, " + behavior[0] + "ing the rate of reaction.";
@@ -155,6 +156,7 @@ function usePowerUp(){
             }
             else if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
                 obstacleSpeed += 2;
+                score += 10;
                 showEffect = true;
                 effect = "Increased " + powerUp[i] + ", speeding up the reaction!";
                 if(i === 1){ //temperature increase
@@ -184,6 +186,7 @@ function usePowerUp(){
             }
             else if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
                 obstacleSpeed -= 2;
+                score += 10;
                 showEffect = true;
                 effect = "Increased " + powerUp[i] + ", slowing down the reaction!";
                 explanation = "An " + behavior[j] + "e in " + powerUp[i] + " reduces the frequency of collisions between particles, " + behavior[1] + "ing the rate of reaction.";
@@ -204,6 +207,7 @@ function usePowerUp(){
             }
             else if(answer.toLowerCase().includes("down") || answer.toLowerCase().includes("decrease") || answer.toLowerCase().includes("lower")){
                 obstacleSpeed -= 2;
+                score += 10;
                 showEffect = true;
                 effect = "Decreased " + powerUp[i] + ", slowing down the reaction!";
                 if(i === 1){ //temperature decrease
@@ -233,6 +237,7 @@ function usePowerUp(){
            }
            else if(answer.toLowerCase().includes("up") || answer.toLowerCase().includes("increase")){
                 obstacleSpeed += 2;
+                score += 10;
                 showEffect = true;
                 effect = "Decreased " + powerUp[i] + ", speeding up the reaction!";
                 explanation = "A " + behavior[j] + "e in " + powerUp[i] + " increases the concentration of reactants, " + behavior[0] + "ing the rate of reaction.";
@@ -341,7 +346,7 @@ function checkCollision(){
         if(showEffect === false && currentBlock === "lucky"){ // if there's no text on the screen from a previous collision, it won't use another power up. (also must be a lucky block)
             if(userX - 25 < blockX + 50 && userX + 25 > blockX && userY + 25 > groundY - 50){
                 console.log('lucky collison!');
-                score += 10;
+                // score += 10;
                 blockX = width + 250;
                 usePowerUp();
             }
