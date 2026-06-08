@@ -143,7 +143,7 @@ function usePowerUp(){
             clearTimeout(timeout);
             timeout = setTimeout(function(){
                 showEffect = false;
-            }, 4000); // after 4 seconds
+            }, 5000); // after 5 seconds
         } else {
             state = "gameOver";
         }
@@ -172,7 +172,7 @@ function usePowerUp(){
                 clearTimeout(timeout);
                 timeout = setTimeout(function(){
                     showEffect = false;
-                }, 4000); // after 4 seconds
+                }, 5000); // after 5 seconds
             } else {
                 state = "gameOver";
             }
@@ -190,7 +190,7 @@ function usePowerUp(){
                 clearTimeout(timeout);
                 timeout = setTimeout(function(){
                     showEffect = false;
-                }, 4000); // after 4 seconds
+                }, 5000); // after 5 seconds
             } else {
                 state = "gameOver"
             }
@@ -221,7 +221,7 @@ function usePowerUp(){
                 clearTimeout(timeout);
                 timeout = setTimeout(function(){
                     showEffect = false;
-                }, 4000); // after 4 seconds
+                }, 5000); // after 5 seconds
             } else {
                 state = "gameOver";
             }
@@ -239,7 +239,7 @@ function usePowerUp(){
                 clearTimeout(timeout);
                 timeout = setTimeout(function(){
                     showEffect = false;
-                }, 4000); // after 4 seconds
+                }, 5000); // after 5 seconds
            }
            else {
                 state = "gameOver";
