@@ -384,18 +384,18 @@ function startScreen(){
     textAlign(CENTER);
     textFont('Varela Round');
     textStyle(BOLD);
-    text("Reaction runner game", width/2, height/3 + 25);
+    text("Reaction runner game", width/2, height/3 - 5);
     textStyle(NORMAL);
     textSize(30);
-    text("SPACEBAR / UP ARROW to jump", width/2, height/3 + 95);
-    // text("Click anywhere with your mouse to \n begin playing!", width/2, height/3 + 150);
+    text("SPACEBAR / UP ARROW to jump", width/2, height/3 + 65);
+    text("Collect lucky blocks & avoid chimeras!", width/2, height/3 + 120);
     fill(188, 219, 171);
     stroke(224, 239, 205);
-    rect(width/2, height/3 + 170, width/4, 70, 10);
+    rect(width/2, height/3 + 200, width/4, 70, 10);
     fill(255);
     textStyle(BOLD);
     noStroke();
-    text("START!", width/2, height/3 + 180);
+    text("START!", width/2, height/3 + 210);
 }
 
 function gameOver(){
@@ -476,14 +476,14 @@ function touchStarted() {
         onGround = false;
     }
     if(state === "start"){
-        if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
             console.log('play');
             state = "play";
         }
     }
     // state = "play";
     if(state === "gameOver"){
-        if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
             console.log('game over');
             score = 0;
             obstacleSpeed = 5;
@@ -500,14 +500,14 @@ function touchStarted() {
 
 function mousePressed() {
     if(state === "start"){
-        if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
             console.log('play');
             state = "play";
         }
     }
     // state = "play";
     if(state === "gameOver"){
-        if(mouseY < height/3 + 170 + 70/2 && mouseY > height/3 + 170 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
             console.log('game over');
             score = 0;
             obstacleSpeed = 5;
