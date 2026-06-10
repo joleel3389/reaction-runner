@@ -255,7 +255,6 @@ function usePowerUp(){
     // if(answer === null){
     //     state = "gameOver";
     // }
-
     // // if a catalyst...
     // if(i === 0){
     //     obstacleSpeed += 2;
