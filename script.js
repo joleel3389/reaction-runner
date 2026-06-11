@@ -20,12 +20,24 @@ var timeout;
 var score = 0;
 var state = "start";
 
+var selectedCharacter = "chiikawa";
+
 function preload() {
     bg = loadImage("imgs/background.png");
     enemy = loadImage("imgs/anokoRun.png");
+
     chiikawaRun1 = loadImage("imgs/speedrun1.png");
     chiikawaRun2 = loadImage("imgs/speedrun2.png");
     chiikawaFall = loadImage("imgs/falling.png");
+
+    hachiRun1 = loadImage("imgs/hachiRun1.png");
+    hachiRun2 = loadImage("imgs/hachiRun2.png");
+    hachiRun3 = loadImage("imgs/hachiRun3.png");
+    hachiFall = loadImage("imgs/hachiFall.png");
+
+    chiikawaPreview = loadImage("imgs/speedrun1.png");
+    hachiPreview = loadImage("imgs/hachiRun1.png");
+
 
 }
 
@@ -378,9 +390,11 @@ function startScreen(){
     noStroke();
     fill(0,0,0,150);
     rectMode(CENTER);
-    rect(width/2, height/2, 600, 400, 10);
+    //rect(width/2, height/2, 600, 400, 10);
+    rect(width/2, height/2, 650, 520, 10);
 
     // start panel & directions
+    // title
     fill(255);
     stroke(120);
     strokeWeight(4);
@@ -388,18 +402,85 @@ function startScreen(){
     textAlign(CENTER);
     textFont('Varela Round');
     textStyle(BOLD);
-    text("Reaction runner game", width/2, height/3 - 5);
+    //text("Reaction runner game", width/2, height/3 - 5);
+    //text("Reaction runner game", width/2, height/3 - 40);
+    text("Reaction runner game", width/2, height/4 - 40);
+    // instructions
     textStyle(NORMAL);
-    textSize(30);
-    text("SPACEBAR / UP ARROW to jump", width/2, height/3 + 65);
-    text("Collect lucky blocks & avoid chimeras!", width/2, height/3 + 120);
+    //textSize(30);
+    textSize(22);
+    //text("SPACEBAR / UP ARROW to jump", width/2, height/3 + 65);
+    //text("Collect lucky blocks & avoid chimeras!", width/2, height/3 + 120);
+    text("SPACEBAR / UP ARROW to jump", width/2, height/4 + 20);
+    text("Collect lucky blocks & avoid chimeras!", width/2, height/4 + 55);
+    text("Answer chemistry questions!", width/2, height/4 + 88);
+
+    // character select
+    textSize(24);
+    textStyle(BOLD);
+    text("Choose your character:", width/2, height/4 + 140);
+
+   // Chiikawa character card: left button
+   // highlights if selected
+    if(selectedCharacter === "chiikawa"){
+        fill(188, 219, 171);
+        stroke(100, 180, 100);
+    } else {
+        fill(220, 220, 220);
+        stroke(160);
+    }
+    strokeWeight(3);
+    rect(width/2 - 110, height/3.5 + 205, 140, 130, 10); // card
+
+    // draws chiikawa preview sprite inside the card
+    imageMode(CENTER);
+    image(chiikawaPreview, width/2 - 110, height/3.5 + 195, 65, 65);
+    imageMode(CORNER);
+
+    fill(60);
+    noStroke();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER);
+    text("Chiikawa", width/2 - 110, height/3.5 + 250);
+
+   // Hachiware character card: right button
+    if(selectedCharacter === "hachiware"){
+        fill(188, 219, 171);
+        stroke(100, 180, 100);
+    } else {
+        fill(220, 220, 220);
+        stroke(160);
+    }
+    strokeWeight(3);
+    rectMode(CENTER);
+    rect(width/2 + 110, height/3.5 + 205, 140, 130, 10); // card
+
+    // draw hachiware preview sprite inside card
+    imageMode(CENTER);
+    //image(hachiPreview, width/2 + 110, height/3 + 195, 65, 65);
+    image(hachiPreview, width/2 + 110, height/3.5 + 195, 65, 65);
+    imageMode(CORNER);
+
+    fill(60);
+    noStroke();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER);
+    text("Hachiware", width/2 + 110, height/3.5 + 250);
+
+
+    // Start button
     fill(188, 219, 171);
     stroke(224, 239, 205);
-    rect(width/2, height/3 + 200, width/4, 70, 10);
+    //rect(width/2, height/3 + 200, width/4, 70, 10);
+    rect(width/2, height/3.5 + 330, width/4, 60, 10);
     fill(255);
     textStyle(BOLD);
     noStroke();
-    text("START!", width/2, height/3 + 210);
+    //text("START!", width/2, height/3 + 210);
+    text("START!", width/2, height/3.5 + 340);
+    rectMode(CORNER);
 }
 
 function gameOver(){
@@ -407,7 +488,8 @@ function gameOver(){
     noStroke();
     fill(0,0,0,150);
     rectMode(CENTER);
-    rect(width/2, height/2, 600, 400, 10);
+    //rect(width/2, height/2, 600, 400, 10);
+    rect(width/2, height/2, 600, 420, 10);
 
     fill(255);
     stroke(120);
@@ -416,18 +498,38 @@ function gameOver(){
     textAlign(CENTER);
     textFont('Varela Round');
     textStyle(BOLD);
+    //text("GAME OVER!", width/2, height/3 + 25);
     text("GAME OVER!", width/2, height/3 + 25);
 
+    textSize(30);
+    text("Your score: " + score, width/2, height/3 + 80);
+
+    // Play again button
     fill(188, 219, 171);
     stroke(224, 239, 205);
-    rect(width/2, height/3 + 170, width/4, 70, 10);
+    rectMode(CENTER);
+    //rect(width/2, height/3 + 170, width/4, 70, 10);
+    rect(width/2, height/3 + 150, 180, 55, 10);
     fill(255);
-    textSize(30);
-    stroke(120);
-    // text("Your score: " + Math.floor(score/60), width/2, height/3 + 90)
-    text("Your score: " + score, width/2, height/3 + 90)
+    //textSize(30);
+    textSize(24);
+    //stroke(120);
     noStroke();
-    text("Play again", width/2, height/3 + 180);
+    textSize(24);
+    // text("Your score: " + Math.floor(score/60), width/2, height/3 + 90)
+    //text("Your score: " + score, width/2, height/3 + 90)
+    //noStroke();
+    //text("Play again", width/2, height/3 + 180);
+    text("Play again", width/2, height/3 + 160);
+
+    fill(180, 210, 240);
+    stroke(140, 180, 220);
+    strokeWeight(2);
+    rect(width/2, height/3 + 225, 220, 55, 10);
+    fill(255);
+    noStroke();
+    textSize(22);
+    text("Change Character", width/2, height/3 + 235);
 
     rectMode(CORNER);
 }
@@ -447,18 +549,42 @@ function user() {
     // noStroke();
     // ellipse(userX, userY, 50)
     imageMode(CENTER);
-    if(onGround === false){
-        image(chiikawaFall, userX, userY, 50, 50);
+
+    if(selectedCharacter === "chiikawa"){
+        if(onGround === false){
+            image(chiikawaFall, userX, userY, 50, 50);
+        }
+        else if(frameCount % 30 < 10){
+            image(chiikawaRun1, userX, userY, 50, 50);
+        }
+        else {
+        //console.log('sprite swap!');
+            image(chiikawaRun2, userX, userY, 50, 50);
+        }
     }
-    else if(frameCount % 30 < 10){
-        image(chiikawaRun1, userX, userY, 50, 50);
+
+    else if(selectedCharacter === "hachiware"){
+    // Hachiware sprites
+        push();
+        scale(-1, 1);
+        if(onGround === false){
+           image(hachiFall, -userX, userY, 50, 50);
+        }
+        else if(frameCount % 30 < 10){
+            image(hachiRun1, -userX, userY, 50, 50);
+        }
+        else if(frameCount % 30 < 20){
+            image(hachiRun2, -userX, userY, 50, 50);
+        }
+        else {
+            image(hachiRun3, -userX, userY, 50, 50);
+        }
+        pop();
     }
-    else {
-        console.log('sprite swap!');
-        image(chiikawaRun2, userX, userY, 50, 50);
-    }
-    imageMode(CORNER);
+
+   imageMode(CORNER);
 }
+
 
 function keyPressed() {
     if ((keyCode === 32 || keyCode === UP_ARROW) && onGround == true){
@@ -478,17 +604,41 @@ function touchStarted() {
     if(state === "play" && onGround == true){
         velocity = -15;
         onGround = false;
-    }
+
     if(state === "start"){
-        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        //if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+            //console.log('play');
+            //state = "play";
+        //if(mouseX > width/2 - 110 - 70 && mouseX < width/2 - 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+            //selectedCharacter = "chiikawa";
+        // Chiikawa card
+        //if(mouseX > width/2 - 120 - 75 && mouseX < width/2 - 120 + 75 && mouseY > 310 - 85 && mouseY < 310 + 85){
+        if(mouseX > width/2 - 110 - 70 && mouseX < width/2 - 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+            selectedCharacter = "chiikawa";
+        }
+        // Hachiware card
+        //if(mouseX > width/2 + 110 - 70 && mouseX < width/2 + 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+        //if(mouseX > width/2 + 120 - 75 && mouseX < width/2 + 120 + 75 && mouseY > 310 -85 && mouseY < 310 +85){
+        if(mouseX > width/2 + 110 - 70 && mouseX < width/2 + 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+            selectedCharacter = "hachiware";
+        }
+        // Start button
+        //if(mouseY < height/3 + 340 + 30 && mouseY > height/3 + 340 - 30 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        //if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > 455 - 27 && mouseY < 455 + 27)
+        if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > height/3 + 330 - 30 && mouseY < height/3 + 330 + 30){
             console.log('play');
             state = "play";
         }
     }
     // state = "play";
     if(state === "gameOver"){
-        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
-            console.log('game over');
+        // play again button
+        //if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        //if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > height/3 + 150 - 27 && mouseY < height/3 + 150 + 27){
+        //if(mouseX > width/2 - 90 && mouseX < width/2 + 90 &&mouseY > height/3 + 330 - 30 && mouseY < height/3 + 330 + 30){
+        if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > height/3 + 150 - 27 && mouseY < height/3 + 150 + 27){
+}
+            //console.log('game over');
             score = 0;
             obstacleSpeed = 5;
             blockX = width + 150;
@@ -498,20 +648,49 @@ function touchStarted() {
 
             state = "play";
         }
+        //if(mouseX > width/2 - 110 && mouseX < width/2 + 110 && mouseY > height/3 + 225 - 27 && mouseY < height/3 + 225 + 27){
+        if(mouseX > width/2 - 110 && mouseX < width/2 + 110 && mouseY > height/3 + 225 - 27 && mouseY < height/3 + 225 + 27){
+            score = 0;
+            obstacleSpeed = 5;
+            blockX = width + 150;
+            currentBlock = "lucky";
+            velocity = 0;
+            showEffect = false;
+            state = "start";  // goes back to start screen
+       }
     }
     return false;
 }
 
 function mousePressed() {
     if(state === "start"){
-        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
-            console.log('play');
+        //if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+            //console.log('play');
+            //state = "play";
+        //if(mouseX > width/2 - 110 - 70 && mouseX < width/2 - 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+        // Chiikawa card
+        //if(mouseX > width/2 - 120 - 75 && mouseX < width/2 - 120 + 75 && mouseY > 310 - 85 && mouseY < 310 + 85){
+        if(mouseX > width/2 - 110 - 70 && mouseX < width/2 - 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+            selectedCharacter = "chiikawa";
+       }
+       // checks if hachiware card was clicked
+        //if(mouseX > width/2 + 110 - 70 && mouseX < width/2 + 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+        //if(mouseX > width/2 + 120 - 75 && mouseX < width/2 + 120 + 75 && mouseY > 310 - 85 && mouseY < 310 + 85){
+        if(mouseX > width/2 + 110 - 70 && mouseX < width/2 + 110 + 70 && mouseY > height/3 + 205 - 65 && mouseY < height/3 + 205 + 65){
+            selectedCharacter = "hachiware";
+        }
+       // Start button
+       //if(mouseY < height/3 + 340 + 30 && mouseY > height/3 + 340 - 30 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        //if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > 455 - 27 && mouseY < 455 + 27)
+        if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > height/3 + 330 - 30 && mouseY < height/3 + 330 + 30){
+            //console.log('play');
             state = "play";
         }
     }
     // state = "play";
     if(state === "gameOver"){
-        if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        //if(mouseY < height/3 + 210 + 70/2 && mouseY > height/3 + 210 - 70/2 && mouseX > width/2 - width/8 && mouseX < width/2 + width/8){
+        if(mouseX > width/2 - 90 && mouseX < width/2 + 90 && mouseY > height/3 + 150 - 27 && mouseY < height/3 + 150 + 27){
             console.log('game over');
             score = 0;
             obstacleSpeed = 5;
@@ -521,6 +700,18 @@ function mousePressed() {
             showEffect = false;
 
             state = "play";
+        }
+
+        if(mouseX > width/2 - 110 && mouseX < width/2 + 110 &&
+           mouseY > height/3 + 225 - 27 && mouseY < height/3 + 225 + 27){
+            score = 0;
+            obstacleSpeed = 5;
+            blockX = width + 150;
+            currentBlock = "lucky";
+            velocity = 0;
+            showEffect = false;
+
+            state = "start"; // go back to start screen
         }
     }
 }
